@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+  StagePass Home Page
+  Purpose: Main landing page for the responsive StagePass prototype.
+  This page handles event discovery and opens concertinfo.html before ticket selection.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StagePass | Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body data-page="home">
+  <!-- SITE HEADER: shared navigation, dark-mode control, and mobile hamburger menu. -->
+  <header class="site-header">
+    <a class="brand" href="index.html">stagepass</a>
+
+    <!-- DESKTOP NAVIGATION: always visible at larger screen sizes. -->
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link active" href="index.html">Home</a>
+      <a class="nav-link" href="#events">Events</a>
+      <a class="nav-link" href="ticket.html">Tickets</a>
+      <a class="nav-link" href="feedback.html">Feedback</a>
+    </nav>
+
+    <!-- HEADER ACTIONS: account link, theme switch, and mobile menu button. -->
+    <div class="header-actions">
+      <a class="account-link" href="#account">Account</a>
+      <label class="theme-control">
+        <span class="theme-label">Dark Mode</span>
+        <input class="theme-checkbox" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"></span>
+      </label>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+
+    <!-- MOBILE NAVIGATION: hidden until the hamburger button opens it. -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a class="mobile-link active" href="index.html">Home</a>
+      <a class="mobile-link" href="#events">Events</a>
+      <a class="mobile-link" href="ticket.html">Tickets</a>
+      <a class="mobile-link" href="feedback.html">Feedback</a>
+      <a class="mobile-link" href="#account">Account</a>
+    </nav>
+  </header>
+
+  <main class="home-main">
+    <!-- EVENT DISCOVERY: category filters and search controls. Mobile-first layout stacks these controls. -->
+    <section class="discovery-section" aria-label="Find events">
+      <!-- CATEGORY FILTERS: JavaScript uses data-category to filter the visible event cards. -->
+      <div class="category-strip" aria-label="Event categories">
+        <button class="category-pill active" type="button" data-category="all">Featured</button>
+        <button class="category-pill" type="button" data-category="music">Tickets</button>
+        <button class="category-pill" type="button" data-category="family">Family</button>
+        <button class="category-pill" type="button" data-category="theater">Arts &amp; Theater</button>
+        <button class="category-pill" type="button" data-category="sports">Sports</button>
+        <button class="category-pill" type="button" data-category="comedy">Comedy</button>
+      </div>
+
+      <!-- SEARCH CONTROLS: location is visual for the prototype; event search filters cards by artist name. -->
+      <div class="search-row">
+        <label class="search-box location-box">
+          <span class="search-icon" aria-hidden="true">⌖</span>
+          <span class="sr-only">City or ZIP code</span>
+          <input id="location-input" type="text" value="Charlotte, NC" aria-label="City or ZIP code">
+        </label>
+
+        <label class="search-box event-search-box">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <span class="sr-only">Search events</span>
+          <input id="event-search" type="search" placeholder="comedy, concerts, shows....." aria-label="Search events">
+        </label>
+      </div>
+    </section>
+
+    <!-- EVENT CARDS: open concertinfo.html with the selected artist. The Get Tickets button then opens selection.html. -->
+    <section class="events-section" id="events">
+      <div class="section-heading-row">
+        <div>
+          <p class="eyebrow">StagePass picks</p>
+          <h1>Trending near you</h1>
+        </div>
+        <p class="section-copy">Find concerts and events around Charlotte.</p>
+      </div>
+
+      <!-- The data-event-name and data-category values are read by script.js for filtering. -->
+      <div class="event-grid" id="event-grid">
+        <a class="event-card featured-card" href="concertinfo.html?event=don-toliver" data-event-name="Don Toliver" data-category="music">
+          <img src="https://i.scdn.co/image/ab6761610000e5ebeb63bf6379a9ea8453a30020" alt="Don Toliver" loading="eager" data-fallback="assets/don-toliver.svg">
+          <div class="event-card-overlay">
+            <span class="event-type">Hip Hop</span>
+            <h2>Don Toliver</h2>
+            <p>Octane Tour · Charlotte</p>
+          </div>
+        </a>
+
+        <a class="event-card" href="concertinfo.html?event=tame-impala" data-event-name="Tame Impala" data-category="music">
+          <img src="https://radiantefm.s3.us-west-2.amazonaws.com/2022/10/tame-impala.jpg" alt="Tame Impala" loading="lazy" data-fallback="assets/tame-impala.svg">
+          <div class="event-card-overlay">
+            <span class="event-type">Psychedelic Pop</span>
+            <h2>Tame Impala</h2>
+            <p>Deadbeat Tour</p>
+          </div>
+        </a>
+
+        <a class="event-card" href="concertinfo.html?event=olivia-rodrigo" data-event-name="Olivia Rodrigo" data-category="music">
+          <img src="https://mikiki.ismcdn.jp/mwimgs/0/9/-/img_097790a5f76dbc250dcb07a892c9b521638301.jpg" alt="Olivia Rodrigo" loading="lazy" data-fallback="assets/olivia-rodrigo.svg">
+          <div class="event-card-overlay">
+            <span class="event-type">Pop</span>
+            <h2>Olivia Rodrigo</h2>
+            <p>Live in Charlotte</p>
+          </div>
+        </a>
+
+        <a class="event-card" href="concertinfo.html?event=the-weeknd" data-event-name="The Weeknd" data-category="music">
+          <img src="https://www.republicrecords.com/cdn/shop/files/TheWeeknd-Edit.jpg?v=1746649811&amp;width=2752" alt="The Weeknd" loading="lazy" data-fallback="assets/the-weeknd.svg">
+          <div class="event-card-overlay">
+            <span class="event-type">R&amp;B</span>
+            <h2>The Weeknd</h2>
+            <p>After Hours Til Dawn</p>
+          </div>
+        </a>
+
+        <a class="event-card" href="concertinfo.html?event=all-time-low" data-event-name="All Time Low" data-category="music">
+          <img src="https://files.kerrang.com/production/images/All-Time-Low-pink-header-Jimmy-Fontaine.jpg?auto=compress&amp;fit=max&amp;w=3840" alt="All Time Low" loading="lazy" data-fallback="assets/all-time-low.svg">
+          <div class="event-card-overlay">
+            <span class="event-type">Alternative</span>
+            <h2>All Time Low</h2>
+            <p>Everyone's Talking!</p>
+          </div>
+        </a>
+      </div>
+
+      <p class="empty-results" id="empty-results" hidden>No matching events were found.</p>
+    </section>
+
+    <!-- FEEDBACK AREA: prototype-only call to action that mirrors the Figma navigation. -->
+    <section class="feedback-section" id="feedback">
+      <div>
+        <p class="eyebrow">Help us improve</p>
+        <h2>Tell us about your experience</h2>
+        <p>StagePass is a class prototype. Feedback helps us improve the next version.</p>
+      </div>
+      <a class="secondary-button" href="mailto:stagepass@example.com">Give Feedback</a>
+    </section>
+
+    <!-- ACCOUNT AREA: placeholder content because this class prototype has no real account backend. -->
+    <section class="account-section" id="account" aria-label="Account">
+      <h2>Your StagePass account</h2>
+      <p>Account features are represented in this prototype but are not connected to a real ticketing service.</p>
+    </section>
+  </main>
+
+  <!-- SITE FOOTER: shared project identification shown on every page. -->
+  <footer class="site-footer">
+    <span>StagePass</span>
+    <span>Interaction Design Prototype · 2026</span>
+  </footer>
+
+  <!-- Shared JavaScript controls navigation, theme, filtering, and event state. -->
+  <script src="script.js"></script>
+</body>
+</html>

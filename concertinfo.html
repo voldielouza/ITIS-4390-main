@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--
+  StagePass Concert Information
+  Purpose: Provides information about Concert selected by user
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StagePass | Concert Information</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="concertinfo.css">
+</head>
+
+<body data-page="concert-info">
+  <!-- SITE HEADER: shared navigation, dark-mode control, and mobile hamburger menu. -->
+  <header class="site-header">
+    <a class="brand" href="index.html">stagepass</a>
+
+    <!-- DESKTOP NAVIGATION: always visible at larger screen sizes. -->
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link active" href="index.html">Home</a>
+      <a class="nav-link" href="index.html#events">Events</a> 
+      <a class="nav-link" href="ticket.html">Tickets</a>
+      <a class="nav-link" href="feedback.html">Feedback</a>
+    </nav>
+
+    <!-- HEADER ACTIONS: account link, theme switch, and mobile menu button. -->
+    <div class="header-actions">
+      <a class="account-link" href="#account">Account</a>
+      <label class="theme-control">
+        <span class="theme-label">Dark Mode</span>
+        <input class="theme-checkbox" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"></span>
+      </label>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+
+    <!-- MOBILE NAVIGATION: hidden until the hamburger button opens it. -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a class="mobile-link active" href="index.html">Home</a>
+      <a class="mobile-link" href="index.html#events">Events</a>
+      <a class="mobile-link" href="ticket.html">Tickets</a>
+      <a class="mobile-link" href="feedback.html">Feedback</a>
+      <a class="mobile-link" href="index.html#account">Account</a>
+    </nav>
+    </header>
+    <main class="home-main">
+
+        <!--Artist Banner-->
+        <section class="artist-banner">
+            <!--Background Image or Color -->
+            <div class="banner-background">
+                <img 
+                src="https://radiantefm.s3.us-west-2.amazonaws.com/2022/10/tame-impala.jpg"
+                alt="Artist Image"
+                class="artist-image"
+                />
+            </div>
+            <!--Gradient Overlay-->
+            <div class="banner-overlay"></div>
+            <!--Banner Info-->
+            <div class="banner-info">
+                <div class="banner-actions">
+                    <button class="like-button" title="Favorite Artist">❤</button>
+                    <span class="badge">Verified Artist</span>
+                </div>
+                <h1 class="artist-name">Tame Impala</h1>
+                <p class="artist-genre">Genre: Psychedelic Pop</p>
+            </div>
+        </section>
+
+        <!--Concert Dates and Ticket List Section-->
+        <section class="concert-dates">
+            <!--Section Title-->
+            <h2 class="title">
+                <span>Concerts</span>
+                <span>Upcoming Shows</span>
+            </h2>
+
+            <!--Filter Controls-->
+            <div class="filter-controls">
+                <!--Search Input-->
+                <label for="search-filter">Search:</label>
+                <input type="text" id="search-filter" placeholder="Search concerts...">
+                <!--Date Filter-->
+                <label for="date-filter">Filter by Date:</label>
+                <input type="date" id="date-filter">
+                
+                <!--Dropdown Filter-->
+                <div class="dropdown-filter">
+                    <label for="location-filter">Filter by Location:</label>
+                    <select id="location-filter">
+                        <option value="">All Tour Locations</option>
+                        <option value="united-states">United States</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
+                <button class="filter-button">Apply Filter</button>
+            </div>
+
+            <!--Concert Cards List Container-->
+            <div class="concert-cards">
+     
+                <!--Concert Item 1-->
+                <div class="concert-item">
+                    <!--Date Box-->
+                    <div class="date-box" style="background: var(--badge-date-bg)">
+                        <span class="date">August 1st, 2026</span>
+                    </div>
+                        <!--Venue and Event Details-->
+                    <span class="day-time">
+                        <span class="day">Saturday</span>
+                        <span class="time">7:00pm</span>
+                    </span>
+                    <h3 class="location-venue">Charlotte, NC - Spectrum Center</h3>
+                    <p class="concert-name">Tame Imapala: Deadbeat</p> 
+                    <!--Action Button-->
+                    <div class="action-button">
+                        <a  class="btn-primary" href="selection.html">Get Tickets →</a>
+                    </div>
+                </div>
+
+                <!--Concert Item 2-->
+                <div class="concert-item">
+                    <!--Date Box-->
+                    <div class="date-box" style="background: var(--badge-date-bg)">
+                        <span class="date">August 8th, 2026</span>
+                    </div>
+                        <!--Venue and Event Details-->
+                    <span class="day-time">
+                        <span class="day">Saturday</span>
+                        <span class="time">7:00pm</span>
+                    </span>
+                    <h3 class="location-venue">Atlanta, GA - State Farm Arena</h3>
+                    <p class="concert-name">Tame Imapala: Deadbeat</p> 
+                    <!--Action Button-->
+                    <div class="action-button">
+                        <a  class="btn-primary" href="selection.html">Get Tickets →</a>
+                    </div>
+                </div>
+
+                <!--Concert Item 3-->
+                <div class="concert-item">
+                    <!--Date Box-->
+                    <div class="date-box" style="background: var(--badge-date-bg)">
+                        <span class="date">August 15th, 2026</span>
+                    </div>
+                        <!--Venue and Event Details-->
+                    <span class="day-time">
+                        <span class="day">Saturday</span>
+                        <span class="time">7:00pm</span>
+                    </span>
+                    <h3 class="location-venue">Tampa, FL - Amalie Arena</h3>
+                    <p class="concert-name">Tame Imapala: Deadbeat</p> 
+                    <!--Action Button-->
+                    <div class="action-button">
+                        <a  class="btn-primary" href="selection.html">Get Tickets →</a>
+                    </div>
+                </div>
+
+                <!--Concert Item 4-->
+                <div class="concert-item">
+                    <!--Date Box-->
+                    <div class="date-box" style="background: var(--badge-date-bg)">
+                        <span class="date">August 22nd, 2026</span>
+                    </div>
+                        <!--Venue and Event Details-->
+                    <span class="day-time">
+                        <span class="day">Saturday</span>
+                        <span class="time">7:00pm</span>
+                    </span>
+                    <h3 class="location-venue">Austin, TX - Frank Erwin Center</h3>
+                    <p class="concert-name">Tame Imapala: Deadbeat</p> 
+                    <!--Action Button-->
+                    <div class="action-button">
+                        <a  class="btn-primary" href="selection.html">Get Tickets →</a>
+                    </div>
+                </div>
+
+                    <!--Concert Item 5-->
+                <div class="concert-item">
+                    <!--Date Box-->
+                    <div class="date-box" style="background: var(--badge-date-bg)">
+                        <span class="date">August 29th, 2026</span>
+                    </div>
+                        <!--Venue and Event Details-->
+                    <span class="day-time">
+                        <span class="day">Saturday</span>
+                        <span class="time">7:00pm</span>
+                    </span>
+                    <h3 class="location-venue">Phoenix, AZ - Jobing Arena</h3>
+                    <p class="concert-name">Tame Imapala: Deadbeat</p> 
+                    <!--Action Button-->
+                    <div class="action-button">
+                        <a  class="btn-primary" href="selection.html">Get Tickets →</a>
+                    </div>
+                </div>
+
+                    <!--Concert Item 6-->
+                <div class="concert-item">
+                    <!--Date Box-->
+                    <div class="date-box" style="background: var(--badge-date-bg)">
+                        <span class="date">September 5th, 2026</span>
+                    </div>
+                        <!--Venue and Event Details-->
+                    <span class="day-time">
+                        <span class="day">Saturday</span>
+                        <span class="time">7:00pm</span>
+                    </span>
+                    <h3 class="location-venue">Denver, CO - Delta Center</h3>
+                    <p class="concert-name">Tame Imapala: Deadbeat</p> 
+                    <!--Action Button-->
+                    <div class="action-button">
+                        <a  class="btn-primary" href="selection.html">Get Tickets →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Experience Section-->
+        <section class="experience-card">
+            <div class="experience-content">
+                <img 
+                    src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80" 
+                    alt="Experience Title Image"
+                />
+                <h2>Experience</h2>
+                <p>Tickets for VIP and Add on Packages</p>
+            </div>
+        </section>
+
+        <!--Artist Bio-->
+        <section class="artist-bio">
+            <div class="bio-content">
+                <!--Left Bio Content-->
+                <div class="bio-left">
+                    <h3 class="title">Tame Impala</h3>
+                    <p>Tame Impala is the psychedelic music project of Australian singer and multi-instrumentalist Kevin Parker. In the recording studio, Parker writes, records, performs, and 
+                        produces the project's music. As a touring act, Tame Impala consists of Parker (vocals, guitar, synthesiser), 
+                        Dominic Simper (guitar, synthesiser), Jay Watson (synthesiser, vocals, guitar), Cam Avery (bass guitar, vocals, synthesiser), 
+                        Julien Barbagallo (drums, vocals), and James Ireland (guitar, synthesiser). The group has a close affiliation with fellow 
+                        Australian psychedelic rock band Pond, sharing members and collaborators, including Watson, Ireland, and formerly Nick Allbrook. 
+                        Originally signed to Modular Recordings, Tame Impala signed in 2015 to Interscope Records in the United States and Fiction 
+                        Records in the United Kingdom.</p>
+                </div>
+                <!--Right Bio Content-->
+                <div class="bio-right">
+                    <img 
+                        src="https://i.pinimg.com/736x/cc/30/64/cc3064a72ff13c91053eb7d9305b2a1c.jpg"
+                        alt="Artist Image"
+                    />
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- SITE FOOTER: shared project identification shown on every page. -->
+  <footer class="site-footer">
+    <span>StagePass</span>
+    <span>Interaction Design Prototype · 2026</span>
+  </footer>
+
+  <!-- Shared JavaScript controls navigation, theme, filtering, and event state. -->
+  <script src="script.js"></script>
+
+</body>

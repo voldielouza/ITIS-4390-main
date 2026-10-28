@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--
+  StagePass Purchased Ticket Viewer
+  Purpose: Displays the ticket that was just purchased in checkout.html.
+  Event information is reused from the selected/purchased event stored by script.js.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Tells phones to use their actual screen width, activating our mobile CSS breakpoints. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StagePass | My Ticket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="ticket">
+  <!-- SITE HEADER: shared desktop/mobile navigation and dark-mode control. -->
+  <header class="site-header">
+    <a class="brand" href="index.html">stagepass</a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="index.html#events">Events</a>
+      <a class="nav-link active" href="ticket.html">Tickets</a>
+      <a class="nav-link" href="feedback.html">Feedback</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="account-link" href="index.html#account">Account</a>
+      <label class="theme-control">
+        <span class="theme-label">Dark Mode</span>
+        <input class="theme-checkbox" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"></span>
+      </label>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a class="mobile-link" href="index.html">Home</a>
+      <a class="mobile-link" href="index.html#events">Events</a>
+      <a class="mobile-link active" href="ticket.html">Tickets</a>
+      <a class="mobile-link" href="feedback.html">Feedback</a>
+      <a class="mobile-link" href="index.html#account">Account</a>
+    </nav>
+  </header>
+
+  <main class="ticket-page">
+    <!-- EMPTY STATE: hidden by default. script.js reveals it (and hides the banner and ticket below)
+         when no purchase has been completed yet, so the page never shows a fake "Purchased" ticket. -->
+    <section class="ticket-empty" id="ticket-empty" hidden>
+      <h1>No tickets yet</h1>
+      <p>Tickets you buy will show up here.</p>
+      <a class="primary-button" href="index.html#events">Browse events</a>
+    </section>
+
+    <!-- PURCHASED EVENT SUMMARY: artwork and event text update to match the completed checkout.
+         The Tame Impala text here is placeholder content that script.js replaces. -->
+    <section class="ticket-event-banner" id="ticket-banner">
+      <div class="ticket-artist-thumb">
+        <img src="https://radiantefm.s3.us-west-2.amazonaws.com/2022/10/tame-impala.jpg" alt="Tame Impala" data-fallback="assets/tame-impala.svg" data-event-image>
+      </div>
+      <div class="ticket-event-copy">
+        <span class="purchased-badge">Purchased</span>
+        <h1 data-event-field="name">Tame Impala</h1>
+        <p data-event-field="tour">DEADBEAT Tour</p>
+        <p data-event-field="ticketEventLine">August 1, 2026 · Spectrum Center · Charlotte, NC</p>
+      </div>
+    </section>
+
+    <!-- TICKET VIEWER: contains the event artwork plus the scannable-looking mobile ticket. -->
+    <section class="ticket-viewer" id="ticket-viewer" aria-labelledby="ticket-heading">
+      <div class="ticket-viewer-heading">
+        <div>
+          <p class="eyebrow">Mobile Ticket</p>
+          <h2 id="ticket-heading">Your Ticket</h2>
+        </div>
+        <span class="ticket-status">Ready to scan</span>
+      </div>
+
+      <div class="ticket-layout">
+        <!-- CONCERT ARTWORK: visual reference for the event tied to this ticket. -->
+        <div class="concert-view">
+          <img src="https://radiantefm.s3.us-west-2.amazonaws.com/2022/10/tame-impala.jpg" alt="Tame Impala concert artwork" data-fallback="assets/tame-impala.svg" data-event-image>
+          <div class="concert-view-overlay">
+            <span>CONCERT VIEW</span>
+          </div>
+        </div>
+
+        <!-- MOBILE TICKET: main purchased-ticket card with date, seat, venue, and demo barcode. -->
+        <article class="mobile-ticket-card">
+          <div class="ticket-card-top">
+            <div>
+              <p class="ticket-small-label">StagePass Mobile Ticket</p>
+              <h3 data-event-field="name">Tame Impala</h3>
+              <p data-event-field="tour">DEADBEAT Tour</p>
+            </div>
+            <div class="ticket-date-block">
+              <strong data-event-field="dateShortUpper">AUG 1</strong>
+              <span data-event-field="time">8:00 PM</span>
+            </div>
+          </div>
+
+          <!-- SEAT DETAILS: values are filled from the selected event in script.js. -->
+          <div class="ticket-details-grid">
+            <div>
+              <span>SECTION</span>
+              <strong data-event-field="section">104</strong>
+            </div>
+            <div>
+              <span>ROW</span>
+              <strong data-event-field="row">G</strong>
+            </div>
+            <div>
+              <span>SEAT</span>
+              <strong data-event-field="seat">12</strong>
+            </div>
+          </div>
+
+          <div class="ticket-venue-row">
+            <span>Venue</span>
+            <strong data-event-field="venue">Spectrum Center · Charlotte, NC</strong>
+          </div>
+
+          <!-- DEMO BARCODE: CSS-generated pattern for prototype presentation only. -->
+          <div class="barcode" aria-label="Demo ticket barcode"></div>
+          <p class="ticket-code" data-event-field="ticketCode">STAGEPASS · TI-DEADBEAT-104-G-12</p>
+        </article>
+      </div>
+
+      <!-- TICKET ACTIONS: return path to the StagePass home page. -->
+      <div class="ticket-actions">
+        <a class="primary-button" href="index.html">Back to Home</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- SITE FOOTER: shared project identification. -->
+  <footer class="site-footer">
+    <span>StagePass</span>
+    <span>Interaction Design Prototype · 2026</span>
+  </footer>
+
+  <!-- MOBILE BOTTOM NAV: fixed tabs for touch navigation. CSS hides them on desktop (768px and up);
+       script.js highlights the current tab with aria-current="page". -->
+  <nav class="bottom-nav" aria-label="Mobile quick navigation">
+    <a href="index.html" class="bottom-nav-link" data-nav="home"><span class="bottom-nav-icon" aria-hidden="true">⌂</span><span>Home</span></a>
+    <a href="index.html#events" class="bottom-nav-link" data-nav="events"><span class="bottom-nav-icon" aria-hidden="true">⌕</span><span>Explore</span></a>
+    <a href="ticket.html" class="bottom-nav-link" data-nav="ticket"><span class="bottom-nav-icon" aria-hidden="true">▤</span><span>Tickets</span></a>
+    <a href="index.html#account" class="bottom-nav-link" data-nav="account"><span class="bottom-nav-icon" aria-hidden="true">◯</span><span>Account</span></a>
+  </nav>
+
+  <!-- script.js (shared by all pages) loads the purchased event from localStorage and fills in the ticket.
+       If nothing has been purchased, it hides the ticket and shows the empty state above instead. -->
+  <script src="script.js"></script>
+</body>
+</html>

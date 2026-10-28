@@ -1,0 +1,1401 @@
+/* --------------------------------------------------
+   StagePass Responsive Styles
+   Purpose: Shared styles for Home, Checkout, and Ticket Viewer.
+   Approach: Mobile-first CSS. Base rules target small screens,
+   then media queries enhance the same layout for desktop.
+-------------------------------------------------- */
+
+/* TABLE OF CONTENTS (search for these headings):
+   1. DESIGN TOKENS / BASE / DARK THEME  - colors and resets
+   2. HEADER / NAVIGATION                - header, theme switch, mobile menu
+   3. HOMEPAGE                           - filters, search, event cards, feedback/account
+   4. CHECKOUT                           - banner, form, summary, timer, buttons, progress
+   5. FOOTER
+   6. RESPONSIVE ENHANCEMENTS            - desktop (768px+) and large desktop (1180px+)
+   7. PURCHASED TICKET VIEWER            - banner, ticket card, barcode, empty state
+   8. MOBILE APP-LIKE ENHANCEMENTS       - phone layout (under 768px), bottom tabs */
+
+/* DESIGN TOKENS: shared colors, surfaces, borders, shadows, and radius values. */
+:root {
+  --purple: #b59ef2;
+  --purple-dark: #46327b;
+  --purple-soft: #f3f0fe;
+  --ink: #2c2c2c;
+  --muted: #666666;
+  --page: #f6f7fa;
+  --surface: #ffffff;
+  --surface-2: #f8f6fc;
+  --border: #d9d9d9;
+  --shadow: 0 16px 40px rgba(28, 20, 43, 0.14);
+  --radius: 14px;
+}
+
+/* BASE / RESET: predictable sizing and shared browser defaults. */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Inter", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* DARK THEME TOKENS: swapping variables lets every page reuse the same component rules. */
+body.dark-mode {
+  --ink: #ffffff;
+  --muted: #d9d2e6;
+  --page: #221a2e;
+  --surface: #2e2340;
+  --surface-2: #382b4a;
+  --border: #66557f;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ACCESSIBILITY: visually hidden text remains available to screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* HEADER / NAVIGATION -----------------------------------
+   Mobile shows the hamburger menu. Desktop navigation is
+   enabled later inside the 768px media query.
+---------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--purple);
+  border-bottom: 1px solid rgba(70, 50, 123, 0.18);
+}
+
+.dark-mode .site-header {
+  background: var(--purple-dark);
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #302449;
+}
+
+.dark-mode .brand {
+  color: #ffffff;
+}
+
+.desktop-nav,
+.account-link,
+.theme-label {
+  display: none;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-button {
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #302449;
+  font-size: 25px;
+}
+
+.dark-mode .menu-button {
+  color: #ffffff;
+}
+
+.menu-button:hover,
+.menu-button:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* THEME SWITCH: checkbox is visually replaced by the custom sliding control. */
+.theme-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.theme-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background: #d9d9d9;
+  border: 1px solid #b0b0b0;
+  position: relative;
+  transition: 0.2s ease;
+}
+
+.theme-switch::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 4px;
+  top: 3px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: 0.2s ease;
+}
+
+.theme-checkbox:checked + .theme-switch {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+
+.theme-checkbox:checked + .theme-switch::after {
+  transform: translateX(18px);
+  background: #46327b;
+}
+
+/* MOBILE MENU: script.js adds/removes the .open class when the menu button is pressed. */
+.mobile-menu {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  padding: 10px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-link {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.mobile-link:hover,
+.mobile-link:focus-visible,
+.mobile-link.active {
+  background: var(--purple-soft);
+  color: var(--purple-dark);
+}
+
+/* HOMEPAGE ------------------------------------------------
+   Discovery controls and event cards follow the StagePass
+   desktop Figma while stacking naturally on small screens.
+---------------------------------------------------------- */
+.home-main {
+  min-height: calc(100vh - 72px);
+  background:
+    radial-gradient(circle at 78% 23%, rgba(181, 158, 242, 0.64), transparent 31%),
+    radial-gradient(circle at 15% 25%, rgba(118, 174, 225, 0.5), transparent 34%),
+    linear-gradient(145deg, #e4effa 0%, #f6f7fa 42%, #c7b8eb 100%);
+}
+
+.dark-mode .home-main {
+  background:
+    radial-gradient(circle at 75% 20%, rgba(135, 83, 225, 0.44), transparent 30%),
+    radial-gradient(circle at 16% 35%, rgba(61, 62, 132, 0.45), transparent 38%),
+    linear-gradient(145deg, #171320 0%, #221a2e 48%, #382b4a 100%);
+}
+
+/* EVENT DISCOVERY: contains category chips plus location/event search inputs. */
+.discovery-section {
+  padding: 18px 16px 24px;
+  background: rgba(255, 255, 255, 0.46);
+  backdrop-filter: blur(18px);
+}
+
+.dark-mode .discovery-section {
+  background: rgba(34, 26, 46, 0.66);
+}
+
+/* CATEGORY FILTERS: horizontal scrolling prevents overflow on narrow screens. */
+.category-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+}
+
+.category-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.category-pill {
+  min-height: 42px;
+  flex: 0 0 auto;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.74);
+  color: #46327b;
+  font-weight: 700;
+}
+
+.dark-mode .category-pill {
+  background: rgba(70, 50, 123, 0.52);
+  color: #ffffff;
+}
+
+.category-pill:hover,
+.category-pill.active {
+  background: var(--purple-dark);
+  color: #ffffff;
+}
+
+/* SEARCH ROW: one column on mobile; two columns on desktop. */
+.search-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.search-box {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(70, 50, 123, 0.18);
+}
+
+.dark-mode .search-box {
+  background: #382b4a;
+  border-color: #66557f;
+}
+
+.search-box input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.search-box input::placeholder {
+  color: var(--muted);
+}
+
+.search-icon {
+  font-size: 20px;
+  color: var(--purple-dark);
+}
+
+.dark-mode .search-icon {
+  color: var(--purple);
+}
+
+.events-section {
+  padding: 30px 16px 54px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-heading-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--purple-dark);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dark-mode .eyebrow {
+  color: var(--purple);
+}
+
+.section-heading-row h1,
+.feedback-section h2,
+.account-section h2 {
+  margin: 0;
+  font-family: "Cairo", Arial, sans-serif;
+}
+
+.section-heading-row h1 {
+  font-size: clamp(28px, 8vw, 40px);
+  line-height: 1.05;
+}
+
+.section-copy {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* EVENT GRID: one-column mobile layout becomes the desktop Figma-style mosaic. */
+.event-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* EVENT CARD: image, dark gradient overlay, event type, artist name, and tour text. */
+.event-card {
+  position: relative;
+  min-height: 250px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #46327b;
+  box-shadow: var(--shadow);
+  isolation: isolate;
+}
+
+.event-card img {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.event-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(17, 11, 28, 0.92) 0%, rgba(17, 11, 28, 0.22) 58%, transparent 80%);
+}
+
+.event-card:hover img,
+.event-card:focus-visible img {
+  transform: scale(1.035);
+}
+
+.event-card:focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 3px;
+}
+
+.event-card-overlay {
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  color: #ffffff;
+}
+
+.event-card-overlay h2 {
+  margin: 4px 0 3px;
+  font-family: "Cairo", Arial, sans-serif;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.featured-card .event-card-overlay h2 {
+  font-size: 34px;
+}
+
+.event-card-overlay p {
+  margin: 0;
+  opacity: 0.88;
+  font-size: 13px;
+}
+
+.event-type {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(181, 158, 242, 0.9);
+  color: #281c42;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.empty-results {
+  padding: 34px;
+  text-align: center;
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+
+/* SUPPORTING HOME SECTIONS: simple prototype feedback and account areas. */
+.feedback-section,
+.account-section {
+  max-width: 1248px;
+  margin: 0 auto 28px;
+  padding: 26px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.feedback-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.account-section {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.feedback-section p,
+.account-section p {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+/* CHECKOUT ------------------------------------------------
+   Purchase form, order summary, hold timer, processing,
+   and confirmation states.
+---------------------------------------------------------- */
+.checkout-page {
+  min-height: calc(100vh - 72px);
+  padding-bottom: 60px;
+  background: var(--page);
+}
+
+/* EVENT BANNER: dynamic event information shown above checkout. */
+.event-banner {
+  min-height: 145px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: 22px 18px;
+  background: var(--purple);
+  color: #2c2243;
+}
+
+.dark-mode .event-banner {
+  background: var(--purple-dark);
+  color: #ffffff;
+}
+
+.event-banner h1 {
+  margin: 0 0 5px;
+  font-size: 25px;
+}
+
+.event-banner p {
+  margin: 3px 0;
+  font-size: 13px;
+}
+
+.event-date {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.event-date strong {
+  font-size: 20px;
+}
+
+.event-date span {
+  font-size: 12px;
+}
+
+.checkout-shell {
+  max-width: 1212px;
+  margin: 0 auto;
+  padding: 24px 16px 0;
+}
+
+.checkout-title-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.checkout-title-row h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.checkout-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* CHECKOUT GRID: stacks on mobile and becomes two columns on desktop. */
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.checkout-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(30, 22, 44, 0.05);
+}
+
+.checkout-group {
+  margin: 0 0 25px;
+  padding: 0;
+  border: 0;
+}
+
+.checkout-group:last-child {
+  margin-bottom: 0;
+}
+
+.checkout-group legend,
+/* ORDER SUMMARY: selected seats, price breakdown, and timer. */
+.summary-panel h3 {
+  margin: 0 0 14px;
+  padding: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* CHOICE BUTTONS: selected state is controlled in script.js. */
+.choice-button {
+  min-height: 52px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.choice-button:hover,
+.choice-button:focus-visible,
+.choice-button.selected {
+  background: var(--purple-soft);
+  color: var(--purple-dark);
+  border-color: var(--purple-dark);
+}
+
+.dark-mode .choice-button.selected,
+.dark-mode .choice-button:hover,
+.dark-mode .choice-button:focus-visible {
+  background: var(--purple-dark);
+  border-color: var(--purple);
+  color: #ffffff;
+}
+
+/* PAYMENT INPUTS: card number, expiration, and CVV fields. */
+.payment-fields label {
+  display: block;
+  margin-bottom: 13px;
+}
+
+.payment-fields label span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.payment-fields input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  outline: 0;
+}
+
+.payment-fields input:focus {
+  border-color: var(--purple-dark);
+  box-shadow: 0 0 0 3px rgba(181, 158, 242, 0.3);
+}
+
+.payment-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.summary-panel h3 {
+  font-size: 20px;
+}
+
+.summary-event,
+.price-row,
+/* HOLD TIMER: visual container for countdown and +1 minute button. */
+.timer-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.summary-event {
+  align-items: flex-start;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.summary-event div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.summary-event span,
+.muted-row {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.price-row {
+  padding-top: 16px;
+  font-size: 13px;
+}
+
+.total-row {
+  margin-top: 13px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+  font-size: 17px;
+}
+
+.timer-card {
+  align-items: center;
+  margin-top: 24px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--purple-soft);
+}
+
+.dark-mode .timer-card {
+  background: var(--purple-dark);
+}
+
+.timer-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.timer-card span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.timer-card strong {
+  color: var(--purple-dark);
+  font-size: 27px;
+}
+
+.dark-mode .timer-card strong {
+  color: var(--purple);
+}
+
+/* SHARED BUTTONS: secondary actions keep a bordered treatment. */
+.timer-button,
+.secondary-button {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid var(--purple-dark);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--purple-dark);
+  font-weight: 700;
+}
+
+.dark-mode .timer-button,
+.dark-mode .secondary-button {
+  border-color: var(--purple);
+  color: var(--purple);
+  background: var(--surface-2);
+}
+
+/* PRIMARY BUTTON: used for purchase confirmation and important navigation actions. */
+.primary-button {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--purple-dark);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.dark-mode .primary-button {
+  background: var(--purple);
+  color: #34254e;
+}
+
+.confirm-button {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.form-message {
+  min-height: 18px;
+  margin: 10px 0 0;
+  color: #9e2834;
+  font-size: 12px;
+}
+
+/* CHECKOUT STATES: hidden sections displayed by JavaScript during/after purchase. */
+.processing-state,
+.confirmation-state {
+  max-width: 720px;
+  margin: 42px auto 0;
+  padding: 0 16px;
+}
+
+.processing-card,
+.confirmation-card {
+  padding: 40px 22px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.processing-icon,
+.success-mark {
+  width: 94px;
+  height: 94px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  background: var(--purple-soft);
+  color: var(--purple-dark);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.success-mark {
+  font-size: 44px;
+}
+
+.dark-mode .processing-icon,
+.dark-mode .success-mark {
+  background: var(--purple-dark);
+  color: var(--purple);
+}
+
+.processing-card h2,
+.confirmation-card h2 {
+  margin: 0 0 8px;
+}
+
+.processing-card p,
+.confirmation-card p {
+  color: var(--muted);
+}
+
+/* PROCESSING PROGRESS: script.js updates the inner bar width from 25% to 100%. */
+.progress-track {
+  width: 100%;
+  height: 14px;
+  margin: 28px 0 13px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.progress-bar {
+  width: 25%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--purple-dark);
+  transition: width 0.45s ease;
+}
+
+.dark-mode .progress-bar {
+  background: var(--purple);
+}
+
+.confirmation-card strong {
+  display: block;
+  margin: 24px 0;
+}
+
+.confirmation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.ticket-message {
+  margin-top: 18px;
+  color: var(--purple-dark) !important;
+  font-weight: 700;
+}
+
+/* FOOTER -------------------------------------------------
+   Shared footer used by all three StagePass pages.
+---------------------------------------------------------- */
+.site-footer {
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 18px 16px;
+  background: #2c2243;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+/* RESPONSIVE ENHANCEMENTS -------------------------------
+   At 768px the full navigation appears and layouts expand.
+   Base rules above remain the mobile-first source of truth.
+---------------------------------------------------------- */
+@media (min-width: 768px) {
+  .site-header {
+    min-height: 62px;
+    padding: 0 24px;
+  }
+
+  .brand {
+    font-size: 25px;
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .nav-link,
+  .account-link {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c2243;
+  }
+
+  .dark-mode .nav-link,
+  .dark-mode .account-link {
+    color: #ffffff;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link.active,
+  .account-link:hover,
+  .account-link:focus-visible {
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .menu-button,
+  .mobile-menu {
+    display: none !important;
+  }
+
+  .theme-control {
+    gap: 9px;
+  }
+
+  .theme-label {
+    display: inline;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .discovery-section {
+    padding: 22px 28px 26px;
+  }
+
+  .category-strip {
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .search-row {
+    max-width: 890px;
+    grid-template-columns: 240px minmax(360px, 1fr);
+    margin: 9px auto 0;
+  }
+
+  .events-section {
+    padding: 32px 22px 58px;
+  }
+
+  .section-heading-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  .event-grid {
+    grid-template-columns: 1.6fr 1fr 1fr;
+    grid-template-rows: 270px 300px;
+  }
+
+  .event-card {
+    min-height: 0;
+  }
+
+  .event-card img {
+    min-height: 0;
+  }
+
+  .featured-card {
+    grid-row: 1 / span 2;
+  }
+
+  .featured-card .event-card-overlay h2 {
+    font-size: 42px;
+  }
+
+  .feedback-section,
+  .account-section {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .feedback-section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .event-banner {
+    min-height: 118px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 42px;
+  }
+
+  .checkout-shell {
+    padding: 28px 24px 0;
+  }
+
+  .checkout-title-row {
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .checkout-grid {
+    grid-template-columns: minmax(0, 1.85fr) minmax(330px, 1fr);
+    gap: 24px;
+  }
+
+  .checkout-panel {
+    padding: 25px;
+  }
+
+  .confirmation-actions {
+    flex-direction: row;
+  }
+
+  .site-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
+
+/* LARGE DESKTOP: centers the nav and matches the 1280px Figma spacing more closely. */
+@media (min-width: 1180px) {
+  .site-header {
+    padding-left: 34px;
+    padding-right: 34px;
+  }
+
+  .desktop-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .events-section {
+    padding-left: 21px;
+    padding-right: 24px;
+  }
+}
+
+/* PURCHASED TICKET VIEWER --------------------------------
+   Styles for the event summary, artwork, mobile ticket card,
+   seat details, venue, barcode, and ticket actions.
+---------------------------------------------------------- */
+.ticket-page {
+  min-height: calc(100vh - 72px);
+  padding-bottom: 36px;
+}
+
+/* TICKET EVENT BANNER: identifies the event that was actually purchased. */
+.ticket-event-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: var(--purple);
+}
+
+.dark-mode .ticket-event-banner {
+  background: var(--purple-dark);
+}
+
+.ticket-artist-thumb {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+
+.ticket-artist-thumb img,
+.concert-view img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ticket-event-copy h1,
+.ticket-event-copy p {
+  margin: 0;
+}
+
+.ticket-event-copy h1 {
+  margin-top: 5px;
+  font-size: 20px;
+}
+
+.ticket-event-copy p {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.purchased-badge,
+.ticket-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.purchased-badge {
+  background: #ffffff;
+  color: var(--purple-dark);
+}
+
+/* VIEWER CONTAINER: constrains ticket content and prevents horizontal overflow. */
+.ticket-viewer {
+  width: min(100% - 32px, 980px);
+  margin: 24px auto 0;
+}
+
+.ticket-viewer-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.ticket-viewer-heading h2 {
+  margin: 3px 0 0;
+  font-size: 26px;
+}
+
+.ticket-status {
+  background: var(--purple-soft);
+  color: var(--purple-dark);
+  border: 1px solid var(--purple);
+}
+
+/* TICKET LAYOUT: artwork and ticket stack on mobile; desktop rules can place them side-by-side. */
+.ticket-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.concert-view {
+  position: relative;
+  min-height: 220px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #e8ebef;
+}
+
+.concert-view-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(rgba(25, 27, 31, 0.18), rgba(25, 27, 31, 0.42));
+}
+
+.concert-view-overlay span {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(23, 25, 29, 0.78);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* MOBILE TICKET CARD: visual ticket with a light header and darker detail area. */
+.mobile-ticket-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.ticket-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px;
+  background: var(--purple-soft);
+  border-bottom: 1px dashed var(--border);
+}
+
+.ticket-card-top h3,
+.ticket-card-top p {
+  margin: 0;
+}
+
+.ticket-card-top h3 {
+  margin-top: 5px;
+  font-size: 24px;
+}
+
+.ticket-card-top p:not(.ticket-small-label) {
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.ticket-small-label {
+  color: var(--purple-dark);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ticket-date-block {
+  min-width: 72px;
+  text-align: right;
+}
+
+.ticket-date-block strong,
+.ticket-date-block span {
+  display: block;
+}
+
+.ticket-date-block strong {
+  color: var(--purple-dark);
+  font-size: 20px;
+}
+
+.ticket-date-block span {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* SEAT GRID: three equal columns for section, row, and seat. */
+.ticket-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.ticket-details-grid div {
+  padding: 18px 12px;
+  text-align: center;
+}
+
+.ticket-details-grid div + div {
+  border-left: 1px solid var(--border);
+}
+
+.ticket-details-grid span,
+.ticket-venue-row span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.ticket-details-grid strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.ticket-venue-row {
+  padding: 18px 20px 8px;
+}
+
+.ticket-venue-row strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+/* DEMO BARCODE: repeating gradient creates a barcode-like visual without an image asset. */
+.barcode {
+  height: 78px;
+  margin: 16px 22px 8px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0,
+    var(--ink) 2px,
+    transparent 2px,
+    transparent 5px,
+    var(--ink) 5px,
+    var(--ink) 7px,
+    transparent 7px,
+    transparent 11px
+  );
+}
+
+.ticket-code {
+  margin: 0;
+  padding: 0 18px 20px;
+  color: var(--muted);
+  font-size: 10px;
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+.ticket-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.ticket-actions .primary-button,
+.ticket-actions .secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+}
+
+@media (min-width: 768px) {
+  .ticket-event-banner {
+    padding: 22px 42px;
+  }
+
+  .ticket-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
+    align-items: stretch;
+  }
+
+  .concert-view {
+    min-height: 430px;
+  }
+
+  .ticket-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

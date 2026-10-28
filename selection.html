@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>StagePass | Ticket Selection</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="selection-map.css"></head>
+<body data-page="selection">
+  <header class="site-header">
+    <a class="brand" href="index.html">stagepass</a>
+
+    <!-- DESKTOP NAVIGATION: always visible at larger screen sizes. -->
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="index.html#events">Events</a>
+      <a class="nav-link" href="ticket.html">Tickets</a>
+      <a class="nav-link" href="feedback.html">Feedback</a>
+    </nav>
+
+    <!-- HEADER ACTIONS: account link, theme switch, and mobile menu button. -->
+    <div class="header-actions">
+      <a class="account-link" href="index.html#account">Account</a>
+      <label class="theme-control">
+        <span class="theme-label">Dark Mode</span>
+        <input class="theme-checkbox" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"></span>
+      </label>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+
+    <!-- MOBILE NAVIGATION: hidden until the hamburger button opens it. -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a class="mobile-link" href="index.html">Home</a>
+      <a class="mobile-link" href="index.html#events">Events</a>
+      <a class="mobile-link" href="ticket.html">Tickets</a>
+      <a class="mobile-link" href="feedback.html">Feedback</a>
+      <a class="mobile-link" href="index.html#account">Account</a>
+    </nav>
+  </header>
+
+<main class="flow-main">
+  <div class="selection-header-container">
+    <section class="selection-top">
+      <a class="back-link" id="selection-back" href="event.html">← Event details</a>
+      <div class="selection-title">
+        <!-- Event Information Customization -->
+        <img class="event-image" data-event-image alt="Event artwork">
+        <div>
+          <div class="event-details">
+            <h2 class="event-title"><span data-event-field="name"></span>:<span data-event-field="tour"></span></h2>
+            <span class="day-time">
+                <span class="day" data-event-field="day">Saturday</span>
+                <span class="time" data-event-field="time">7:00pm</span>
+            </span>
+            <h3 class="location-venue" data-event-field="venue">Charlotte, NC - Spectrum Center</h3>
+          </div>
+          <p class="eyebrow">Choose your seats</p>
+          <h1 data-event-field="name"></h1><p><span data-event-field="dateFull"></span> <span data-event-field="venue"></span></p>
+      </div>
+    </div>
+    </section>
+  </div> <!-- Close selection-header-container -->
+
+  <section class="selection-layout">
+    <div class="flow-card seat-map-pane">
+      <div class="section-heading-row">
+        <div>
+          <p class="eyebrow">Interactive venue map</p>
+          <h2>Choose a section</h2>
+        </div>
+        <small>Illustrative seating layout</small>
+      </div>
+      <!-- Stylized Spectrum Center-inspired arena: section geometry is illustrative. -->
+<div class="arena" aria-label="Illustrative arena seating plan">
+  <div class="arena-bowl"><div class="arena-floor"><div class="stage-shape">STAGE</div><span>FLOOR</span></div></div>
+  <div class="arena-sections" id="arena-sections" role="group" aria-label="Choose seating section"></div>
+</div><p class="seat-hint">Select a section on the map or a ticket listing to continue.</p><!-- Five map statuses. Matching availability updates with ticket quantity. -->
+<div class="legend spectrum-legend" aria-label="Seating availability legend">
+  <span><i class="legend-dot legend-match"></i>Available — exact search match</span>
+  <span><i class="legend-dot legend-available"></i>Available — similar to search</span>
+  <span><i class="legend-dot legend-selected"></i>Selected</span>
+  <span><i class="legend-dot legend-unavailable"></i>Unavailable</span>
+  <span><i class="legend-dot legend-resale"></i>Resale</span>
+</div></div><aside class="flow-card ticket-list-pane"><div class="section-heading-row"><div><p class="eyebrow">Available listings</p><h2>Select tickets</h2></div></div><div class="date-filters"><label>Sort <select id="ticket-sort"><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></label><label>Quantity <select id="ticket-quantity"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select></label></div><div id="ticket-listings" class="ticket-listings"></div><div class="selection-summary"><p id="selection-caption">Choose a listing</p><button id="clear-section" class="clear-section" type="button" hidden>Clear selection</button><div class="price-row"><span>Tickets subtotal</span><strong id="selection-subtotal">—</strong></div><div class="price-row"><span>Estimated fees</span><strong id="selection-fees">—</strong></div><div class="price-row total-row"><span>Estimated total</span><strong id="selection-total">—</strong></div><button class="primary-button" id="continue-checkout" type="button" disabled>Continue to checkout</button></div></aside></section></main>
+<footer class="site-footer"><span>StagePass</span><span>Interaction Design Prototype · 2026</span></footer><script src="script.js"></script><script src="enhancements.js"></script></body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>StagePass | Concert Information</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head>
+<body data-page="event">
+  <header class="site-header">
+    <a class="brand" href="index.html">stagepass</a>
+
+    <!-- DESKTOP NAVIGATION: always visible at larger screen sizes. -->
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="index.html#events">Events</a>
+      <a class="nav-link" href="ticket.html">Tickets</a>
+      <a class="nav-link" href="feedback.html">Feedback</a>
+    </nav>
+
+    <!-- HEADER ACTIONS: account link, theme switch, and mobile menu button. -->
+    <div class="header-actions">
+      <a class="account-link" href="index.html#account">Account</a>
+      <label class="theme-control">
+        <span class="theme-label">Dark Mode</span>
+        <input class="theme-checkbox" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"></span>
+      </label>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+
+    <!-- MOBILE NAVIGATION: hidden until the hamburger button opens it. -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a class="mobile-link" href="index.html">Home</a>
+      <a class="mobile-link" href="index.html#events">Events</a>
+      <a class="mobile-link" href="ticket.html">Tickets</a>
+      <a class="mobile-link" href="feedback.html">Feedback</a>
+      <a class="mobile-link" href="index.html#account">Account</a>
+    </nav>
+  </header>
+<main class="flow-main"><section class="detail-hero"><div class="detail-hero-inner"><a class="back-link" href="index.html">← All events</a><span class="eyebrow">Concert Information</span><h1 data-event-field="name">Concert</h1><p data-event-field="tour"></p><p data-event-field="venue"></p><p data-event-field="dateFull"></p></div><img class="detail-art" data-event-image alt="Concert artwork"></section>
+<section class="flow-card date-panel"><div class="section-heading-row"><div><p class="eyebrow">Upcoming dates</p><h2>Available Tickets</h2></div><p>Choose a date to view ticket options.</p></div><div class="date-filters"><label>Month <select id="month-filter"><option value="all">All dates</option><option value="10">October</option><option value="11">November</option><option value="12">December</option><option value="08">August</option></select></label><label>Sort by <select id="date-sort"><option value="soon">Soonest first</option><option value="late">Latest first</option></select></label></div><div id="event-date-list" class="date-list"></div><p id="date-empty" hidden>No dates match that month.</p></section>
+<section class="flow-card about-event"><h2>About the event</h2><p>Explore the tour, check the venue and compare tickets before checkout. Event dates and seat availability are sample data for this design prototype, not live inventory.</p><div class="event-info-facts"><span>📍 <strong data-event-field="venue"></strong></span><span>🗓 <strong data-event-field="dateFull"></strong></span><span>🎟 Select tickets before checkout</span></div></section></main>
+<footer class="site-footer"><span>StagePass</span><span>Interaction Design Prototype · 2026</span></footer><script src="script.js"></script><script src="enhancements.js"></script></body></html>

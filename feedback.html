@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>StagePass | Feedback</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head>
+<body data-page="feedback">
+  <header class="site-header">
+    <a class="brand" href="index.html">stagepass</a>
+
+    <!-- DESKTOP NAVIGATION: always visible at larger screen sizes. -->
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="index.html#events">Events</a>
+      <a class="nav-link" href="ticket.html">Tickets</a>
+      <a class="nav-link" href="feedback.html">Feedback</a>
+    </nav>
+
+    <!-- HEADER ACTIONS: account link, theme switch, and mobile menu button. -->
+    <div class="header-actions">
+      <a class="account-link" href="index.html#account">Account</a>
+      <label class="theme-control">
+        <span class="theme-label">Dark Mode</span>
+        <input class="theme-checkbox" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"></span>
+      </label>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+
+    <!-- MOBILE NAVIGATION: hidden until the hamburger button opens it. -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a class="mobile-link" href="index.html">Home</a>
+      <a class="mobile-link" href="index.html#events">Events</a>
+      <a class="mobile-link" href="ticket.html">Tickets</a>
+      <a class="mobile-link" href="feedback.html">Feedback</a>
+      <a class="mobile-link" href="index.html#account">Account</a>
+    </nav>
+  </header>
+<main class="flow-main"><section class="flow-card feedback-form-wrap"><p class="eyebrow">Help us improve</p><h1>Tell us about your experience</h1><p>How did your StagePass ticket-buying experience go?</p><form id="feedback-form" class="feedback-form"><fieldset><legend>How easy was the website to use?</legend><div class="rating-options"><label><input type="radio" name="rating" value="1" required> 1 · Difficult</label><label><input type="radio" name="rating" value="2"> 2</label><label><input type="radio" name="rating" value="3"> 3</label><label><input type="radio" name="rating" value="4"> 4</label><label><input type="radio" name="rating" value="5"> 5 · Easy</label></div></fieldset><label>What worked well?<textarea id="feedback-positive" rows="4" placeholder="Tell us what you liked..."></textarea></label><label>What should we improve?<textarea id="feedback-improve" rows="4" placeholder="Tell us what could be better..."></textarea></label><button class="primary-button" type="submit">Submit feedback</button></form><section id="feedback-thanks" hidden role="status"><h2>Thank you for your feedback!</h2><p>Your response was saved in this browser for the class prototype.</p><a class="secondary-button" href="index.html">Return home</a></section></section></main>
+<footer class="site-footer"><span>StagePass</span><span>Interaction Design Prototype · 2026</span></footer><script src="script.js"></script><script src="enhancements.js"></script></body></html>

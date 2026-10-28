@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--
+  StagePass Checkout Page
+  Purpose: Simulates the purchase step after an event is selected on the home page.
+  The selected event is loaded by script.js from the URL/localStorage and reused after purchase.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Tells phones to use their actual screen width, activating our mobile CSS breakpoints. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StagePass | Checkout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="checkout">
+  <!-- SITE HEADER: same responsive navigation and theme controls used across StagePass. -->
+  <header class="site-header">
+    <a class="brand" href="index.html">stagepass</a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="index.html#events">Events</a>
+      <a class="nav-link" href="ticket.html">Tickets</a>
+      <a class="nav-link" href="feedback.html">Feedback</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="account-link" href="index.html#account">Account</a>
+      <label class="theme-control">
+        <span class="theme-label">Dark Mode</span>
+        <input class="theme-checkbox" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"></span>
+      </label>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    </div>
+
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <a class="mobile-link" href="index.html">Home</a>
+      <a class="mobile-link" href="index.html#events">Events</a>
+      <a class="mobile-link" href="ticket.html">Tickets</a>
+      <a class="mobile-link" href="feedback.html">Feedback</a>
+      <a class="mobile-link" href="index.html#account">Account</a>
+    </nav>
+  </header>
+
+  <main class="checkout-page">
+    <!-- EVENT BANNER: populated dynamically so the checkout matches the artist clicked on Home. -->
+    <section class="event-banner">
+      <div>
+        <h1 data-event-field="name">Tame Impala</h1>
+        <p data-event-field="tour">DEADBEAT Tour</p>
+        <p data-event-field="venue">Spectrum Center · Charlotte, NC</p>
+      </div>
+      <div class="event-date">
+        <strong data-event-field="dateShort">Aug 1</strong>
+        <span data-event-field="dateTime">2026 · 8:00 PM</span>
+      </div>
+    </section>
+
+    <!-- CHECKOUT FORM: main purchase interface shown before the processing animation begins. -->
+    <section class="checkout-shell" id="checkout-shell">
+      <div class="checkout-title-row">
+        <div>
+          <p class="eyebrow">Secure checkout</p>
+          <h2>Checkout</h2>
+        </div>
+        <p class="checkout-note">Your tickets are being held while you complete checkout.</p>
+      </div>
+
+      <div class="checkout-grid">
+        <!-- LEFT PANEL: delivery choice, payment choice, and card-entry fields. -->
+        <form class="checkout-panel payment-panel" id="checkout-form">
+          <!-- DELIVERY METHOD: selected styling is controlled by the choice-button JavaScript. -->
+          <fieldset class="checkout-group">
+            <legend>Delivery Method</legend>
+            <div class="option-grid">
+              <button class="choice-button selected" type="button" data-choice-group="delivery">Mobile Ticket</button>
+              <button class="choice-button" type="button" data-choice-group="delivery">Email</button>
+            </div>
+          </fieldset>
+
+          <!-- PAYMENT METHOD: visual prototype choice between card and PayPal. -->
+          <fieldset class="checkout-group">
+            <legend>Payment Method</legend>
+            <div class="option-grid">
+              <button class="choice-button selected" type="button" data-choice-group="payment">Credit Card</button>
+              <button class="choice-button" type="button" data-choice-group="payment">PayPal</button>
+            </div>
+          </fieldset>
+
+          <!-- PAYMENT INFORMATION: input formatting is handled in script.js. -->
+          <fieldset class="checkout-group payment-fields">
+            <legend>Payment Information</legend>
+            <label>
+              <span>Card number</span>
+              <input id="card-number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="XXXX XXXX XXXX 1234" maxlength="19">
+            </label>
+            <div class="payment-row">
+              <label>
+                <span>Expiration</span>
+                <input id="card-expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5">
+              </label>
+              <label>
+                <span>CVV</span>
+                <input id="card-cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="XXX" maxlength="4">
+              </label>
+            </div>
+          </fieldset>
+        </form>
+
+        <!-- RIGHT PANEL: order summary, hold timer, and final purchase button.
+             The text inside data-event-field elements is placeholder text that script.js replaces. -->
+        <aside class="checkout-panel summary-panel">
+          <h3>Order Summary</h3>
+          <div class="summary-event">
+            <div>
+              <strong data-event-field="name">Tame Impala</strong>
+              <span data-event-field="seatSummary">Section 114 · Row K</span>
+            </div>
+            <span data-event-field="ticketCount">2 Tickets</span>
+          </div>
+
+          <div class="price-row">
+            <span>Tickets</span>
+            <strong data-event-field="ticketPrice">$146.00</strong>
+          </div>
+          <div class="price-row muted-row">
+            <span>Fees</span>
+            <span data-event-field="fees">$22.00</span>
+          </div>
+          <div class="price-row total-row">
+            <span>Total</span>
+            <strong data-event-field="totalPrice">$168.00</strong>
+          </div>
+
+          <!-- HOLD TIMER: counts down and allows the prototype user to add one minute. -->
+          <div class="timer-card">
+            <div>
+              <span>Time Remaining</span>
+              <strong id="checkout-timer">09:32</strong>
+            </div>
+            <button class="timer-button" id="add-minute" type="button">+1 Minute</button>
+          </div>
+
+          <button class="primary-button confirm-button" id="confirm-purchase" type="button">Confirm Purchase</button>
+          <p class="form-message" id="form-message" role="status"></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PROCESSING STATE: replaces the checkout panel and animates through 25/50/75/100 percent. -->
+    <section class="processing-state" id="processing-state" hidden aria-live="polite">
+      <div class="processing-card">
+        <div class="processing-icon">SP</div>
+        <h2>Processing your purchase...</h2>
+        <p>Please keep this page open.</p>
+        <div class="progress-track" aria-label="Purchase progress">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <strong id="progress-label">25%</strong>
+      </div>
+    </section>
+
+    <!-- CONFIRMATION STATE: appears after processing and links to the purchased ticket viewer. -->
+    <section class="confirmation-state" id="confirmation-state" hidden>
+      <div class="confirmation-card">
+        <div class="success-mark">✓</div>
+        <h2>Payment Confirmed</h2>
+        <p>Your StagePass purchase is complete.</p>
+        <strong data-event-field="confirmationLabel">Tame Impala · DEADBEAT Tour</strong>
+        <div class="confirmation-actions">
+          <a class="primary-button" href="ticket.html" id="view-tickets">View My Tickets</a>
+          <a class="secondary-button" href="index.html">Back to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SITE FOOTER: shared project identification. -->
+  <footer class="site-footer">
+    <span>StagePass</span>
+    <span>Interaction Design Prototype · 2026</span>
+  </footer>
+
+  <!-- MOBILE BOTTOM NAV: touch navigation. 
+       script.js highlights the current tab with aria-current="page". -->
+  <nav class="bottom-nav" aria-label="Mobile quick navigation">
+    <a href="index.html" class="bottom-nav-link" data-nav="home"><span class="bottom-nav-icon" aria-hidden="true">⌂</span><span>Home</span></a>
+    <a href="index.html#events" class="bottom-nav-link" data-nav="events"><span class="bottom-nav-icon" aria-hidden="true">⌕</span><span>Explore</span></a>
+    <a href="ticket.html" class="bottom-nav-link" data-nav="ticket"><span class="bottom-nav-icon" aria-hidden="true">▤</span><span>Tickets</span></a>
+    <a href="index.html#account" class="bottom-nav-link" data-nav="account"><span class="bottom-nav-icon" aria-hidden="true">◯</span><span>Account</span></a>
+  </nav>
+
+  <!-- script.js (shared by all pages) fills in the event details, runs the hold timer and purchase animation,
+       and saves the purchase so ticket.html can show it. -->
+  <script src="script.js"></script>
+</body>
+</html>
